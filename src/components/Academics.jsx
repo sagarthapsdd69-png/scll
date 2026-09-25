@@ -17,6 +17,13 @@ const LEARNING = [
   'Continuous assessment system', 'Holistic personality development',
 ]
 
+const CALENDAR_ITEMS = [
+  { title: 'Admissions & Orientation', text: 'New academic sessions begin with student registration and orientation for families.' },
+  { title: 'Mid-Term Assessments', text: 'Regular assessments and progress reviews are conducted to monitor academic growth.' },
+  { title: 'Annual Examinations', text: 'Final exams and result declarations are scheduled at the end of each term.' },
+  { title: 'Holidays & Events', text: 'Festivals, co-curricular activities, and school breaks are planned throughout the year.' },
+]
+
 export default function Academics() {
   return (
     <section id="classes" className="section">
@@ -41,6 +48,19 @@ export default function Academics() {
               <div className="facility-item" key={item}>
                 <div className="luxury-facility-icon" />
                 <p>{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div id="academic-calendar" className="facilities-section">
+          <h2>Academic Calendar</h2>
+          <p className="section-subtitle">Key milestones and important academic dates for the year</p>
+          <div className="grid">
+            {CALENDAR_ITEMS.map(({ title, text }) => (
+              <div className="card academic-card" key={title}>
+                <h3>{title}</h3>
+                <p>{text}</p>
               </div>
             ))}
           </div>

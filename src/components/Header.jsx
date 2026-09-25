@@ -1,14 +1,16 @@
 import { useState, useEffect, useRef } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from '/images/Bpss Logo.jpeg'
 
 const NAV_LINKS = [
-  { href: '#home',      label: 'Home' },
-  { href: '#about',     label: 'About' },
-  { href: '#founding',  label: 'Founding Members' },
-  { href: '#principal', label: 'Principal' },
-  { href: '#classes',   label: 'Academics' },
-  { href: '#gallery',   label: 'Gallery' },
-  { href: '#contact',   label: 'Contact' },
+  { href: '#home', label: 'Home', type: 'anchor' },
+  { href: '#about', label: 'About', type: 'anchor' },
+  { href: '#founding', label: 'Founding Members', type: 'anchor' },
+  { href: '#principal', label: 'Principal', type: 'anchor' },
+  { href: '#classes', label: 'Academics', type: 'anchor' },
+  { href: '/academic-calendar', label: 'Academic Calendar', type: 'route' },
+  { href: '#gallery', label: 'Gallery', type: 'anchor' },
+  { href: '#contact', label: 'Contact', type: 'anchor' },
 ]
 
 export function scrollTo(href) {
@@ -19,6 +21,8 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const navRef = useRef(null)
+  const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50)
@@ -37,7 +41,18 @@ export default function Header() {
   function handleNavClick(e, href) {
     e.preventDefault()
     setMenuOpen(false)
-    scrollTo(href)
+
+    if (href.startsWith('#')) {
+      if (location.pathname !== '/') {
+        navigate('/')
+        setTimeout(() => scrollTo(href), 50)
+      } else {
+        scrollTo(href)
+      }
+      return
+    }
+
+    navigate(href)
   }
 
   return (
@@ -57,13 +72,26 @@ export default function Header() {
             ☰
           </button>
           <ul className={menuOpen ? 'active' : ''}>
-            {NAV_LINKS.map(({ href, label }) => (
-              <li key={href}>
-                <a href={href} className="nav-link" onClick={(e) => handleNavClick(e, href)}>
-                  {label}
-                </a>
-              </li>
-            ))}
+            {NAV_LINKS.map(({ href, label, type }) => {
+              const isActive = location.pathname === '/academic-calendar' && href === '/academic-calendar'
+              return (
+                <li key={href}>
+                  {type === 'route' ? (
+                    <Link
+                      to={href}
+                      className={`nav-link ${isActive ? 'active' : ''}`}
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      {label}
+                    </Link>
+                  ) : (
+                    <a href={href} className="nav-link" onClick={(e) => handleNavClick(e, href)}>
+                      {label}
+                    </a>
+                  )}
+                </li>
+              )
+            })}
           </ul>
         </nav>
       </div>
