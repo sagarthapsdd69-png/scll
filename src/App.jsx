@@ -9,8 +9,6 @@ import Academics from './components/Academics'
 import Gallery from './components/Gallery'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
-import AcademicCalendar from './components/AcademicCalendar'
-import HomepageCalendarCard from './components/HomepageCalendarCard'
 
 export default function App() {
   return (
@@ -18,10 +16,6 @@ export default function App() {
       <Header />
       <main>
         <Routes>
-          <Route
-            path="/academic-calendar"
-            element={<AcademicCalendar />}
-          />
           <Route
             path="/"
             element={(
@@ -31,7 +25,6 @@ export default function App() {
                 <Founding />
                 <Principal />
                 <Academics />
-                <HomepageCalendarCard />
                 <Gallery />
                 <Contact />
               </>

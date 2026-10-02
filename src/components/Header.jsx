@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import logo from '/images/Bpss Logo.jpeg'
 
 const NAV_LINKS = [
@@ -8,7 +8,6 @@ const NAV_LINKS = [
   { href: '#founding', label: 'Founding Members', type: 'anchor' },
   { href: '#principal', label: 'Principal', type: 'anchor' },
   { href: '#classes', label: 'Academics', type: 'anchor' },
-  { href: '/academic-calendar', label: 'Academic Calendar', type: 'route' },
   { href: '#gallery', label: 'Gallery', type: 'anchor' },
   { href: '#contact', label: 'Contact', type: 'anchor' },
 ]
@@ -72,26 +71,13 @@ export default function Header() {
             ☰
           </button>
           <ul className={menuOpen ? 'active' : ''}>
-            {NAV_LINKS.map(({ href, label, type }) => {
-              const isActive = location.pathname === '/academic-calendar' && href === '/academic-calendar'
-              return (
-                <li key={href}>
-                  {type === 'route' ? (
-                    <Link
-                      to={href}
-                      className={`nav-link ${isActive ? 'active' : ''}`}
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      {label}
-                    </Link>
-                  ) : (
-                    <a href={href} className="nav-link" onClick={(e) => handleNavClick(e, href)}>
-                      {label}
-                    </a>
-                  )}
-                </li>
-              )
-            })}
+            {NAV_LINKS.map(({ href, label }) => (
+              <li key={href}>
+                <a href={href} className="nav-link" onClick={(e) => handleNavClick(e, href)}>
+                  {label}
+                </a>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>
